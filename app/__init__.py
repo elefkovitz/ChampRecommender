@@ -1,5 +1,9 @@
 from flask import Flask, jsonify, request, render_template
-from riotwatcher import RiotWatcher, LoLException
+from riotwatcher import RiotWatcher, LoLException, \
+error_404, error_400 \
+,error_500
+#error_503, error_401, error_403, error_429,\
+
 from collections import defaultdict
 import numpy as np
 import pandas as pd
@@ -7,22 +11,23 @@ import os
 import cPickle as pickle
 #---------- MODEL IN MEMORY ----------------#
 
-# # Build a LogisticRegression predictor on it
-# patients = pd.read_csv("haberman.data", header=None)
-# patients.columns=['age','year','nodes','survived']
-# patients=patients.replace(2,0)  # The value 2 means death in 5 years
 
-# X = patients[['age','year','nodes']]
-# Y = patients['survived']
-# PREDICTOR = LogisticRegression().fit(X,Y)
-w = RiotWatcher(key='d8eb3b3a-6401-42af-bb07-a021fd8d9545')
+#First, get your key
+res = []
+with open('RitoMongo.conf') as f:
+    for line in f:
+        res.append(line.rstrip('\n'));
+Key=res[2];
+
+#Then, use our key to get all champion data
+w = RiotWatcher(key=Key)
 tags = w.static_get_champion_list(champ_data='tags')
 tag_dict = defaultdict(list)
 for key, value in tags['data'].iteritems():
     tag_dict[value['id']].append(value['name'])
     tag_dict[value['id']].append(value['tags'])
 
-#These are all my calculation, they should go in a new .py file, but...
+#These are all my calculations, they should go in a new .py file, but...
 file_one = open('app/user_df.pkl','rb')
 file_two = open('app/cosine_similarity.pkl','rb')
 user_df = pickle.load(file_one)
@@ -30,7 +35,8 @@ cos_sim = pickle.load(file_two)
 file_one.close()
 file_two.close()
 
-#  Fix -> try to change structure into dataframe.. ??
+#  Find most "similar" user from Cosine Similarity calculation
+# (Model is pre-calculated because it takes forever to run)
 def computeNearestNeighbor(username, df):
     """creates a sorted list of users based on distance to username"""
     distances = []
@@ -45,7 +51,7 @@ def computeNearestNeighbor(username, df):
     # Just return the top 4 Neighbors
     return distances[-4:]
 
-## Refine for definition..
+#Calculate the User-User recommendation
 
 def recommendation(username,df):
     # first find nearest neighbor
@@ -127,25 +133,55 @@ def my_utility_processor():
 
 # Get an example and return it's score from the predictor model
 @app.route("/", methods=["GET", "POST"])
+@app.route("/index", methods=["GET", "POST"])
 def score():
-    champ_path = request.form.get("image_path", "")
+    champ_path = request.form.get("champ_path", "")
+    list_of_errors = ['error_400','error_401','error_403','error_404',\
+    'error_429' ,'error_500','error_503','error_504']
     if champ_path:
-        results = get_summoner_history(champ_path)
-        profile_pic = get_profile_pic(champ_path)
-        ranked_tier = get_ranked_tier(champ_path)
-        recommended_champs = champs_to_play(champ_path)
+        try:
+            results = get_summoner_history(champ_path)
+            profile_pic = get_profile_pic(champ_path)
+            ranked_tier = get_ranked_tier(champ_path)
+            recommended_champs = champs_to_play(champ_path)
+            return render_template("results.html", champ_path=champ_path, results=results
+                                ,profile_pic=profile_pic, ranked_tier=ranked_tier
+                                ,recommended_champs=recommended_champs)
+        except LoLException as e:
+            if e in list_of_errors:
+                error_message = e
+            else:
+                error_message = "IDK what the deal is"
+            return render_template("index.html", error_message=error_message)
     else:
-        results = [[1, [0,0]]]
-        profile_pic = 1
-        ranked_tier = ['Nothing', 'Nothing']
-        recommended_champs = [1]
-    return render_template("index.html", champ_path=champ_path, results=results
-                            ,profile_pic=profile_pic, ranked_tier=ranked_tier
-                            ,recommended_champs=recommended_champs)
+        return render_template("index.html", error_message=None)
 
-#@app.errorhandler(404)
-#def page_not_found(e):
-#    return render_template('404.html'), 404
+@app.route("/results", methods=["GET", "POST"])
+def results():
+    champ_path = request.form.get("champ_path", "")
+    list_of_errors = ['error_400','error_401','error_403','error_404',\
+    'error_429' ,'error_500','error_503','error_504']
+    if champ_path:
+        try:
+            results = get_summoner_history(champ_path)
+            profile_pic = get_profile_pic(champ_path)
+            ranked_tier = get_ranked_tier(champ_path)
+            recommended_champs = champs_to_play(champ_path)
+            return render_template("results.html", champ_path=champ_path, results=results
+                                ,profile_pic=profile_pic, ranked_tier=ranked_tier
+                                ,recommended_champs=recommended_champs)
+        except LoLException as e:
+            if e in list_of_errors:
+                error_message = e
+            else:
+                error_message = "IDK what the deal is"
+            return render_template("index.html", error_message=error_message)
+    else:
+        return render_template("index.html", error_message=None)
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 #--------- RUN WEB APP SERVER ------------#
 
 # Start the app server

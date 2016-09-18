@@ -8,7 +8,7 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
 
-    <!-- D3.js -->
+    <!-- CSS -->
 
     <style>
       body {
@@ -147,62 +147,9 @@
     <h1><FONT color= '#ff9933'>LoL Recommender</FONT></h1>
 
   <form method="post">
-    <input name="image_path" type="text" id="imageurl" placeholder="Enter Summoner Name" />
+    <input name="champ_path" type="text" id="imageurl" placeholder="Enter Summoner Name" />
     <input type="submit" id="btn" value="Go"/>
     <br>
-    <img src = "https://sk2.op.gg/images/profile_icons/profileIcon{{profile_pic}}.jpg"
-    alt = {{champ_path}}_{{profile_pic}}
-    style = "width: 90px; height: 90px">
-    Showing content for: {{champ_path}}
-    <br>
-    <img src = "https://sk2.op.gg/images/medals/{{ranked_tier[0]}}_{{ranked_tier[1]}}.png"
-    alt = {{champ_path}}_{{ranked_tier[0]}}_{{ranked_tier[1]}}
-    style = "width: 120px; height: 120px">
-    Ranked Tier: {{ranked_tier[0]}} {{ranked_tier[1]}}
-    <br>
-    {% if recommended_champs is defined %}
-    {% for champs in recommended_champs %}
-    Recommended: {{get_champ_name(champs)[0]}}
-    <img src = "https://sk2.op.gg/images/lol/champion/{{ get_champ_name(champs)[0]|e }}.png"
-        alt = {{get_champ_name(champs)[0]|e}}
-        style = "width: 60px; height: 60px">
-    {% endfor %}
+    {% if error_message %}
+    {{error_message}}
     {% endif %}
-    <div class="SideContent">
-    <div class="Header">
-    Match History
-  </div>
-    {% for value in results %}
-    <div class="ChampionBox Ranked">
-    <div class="Face">
-    <img src = "https://sk2.op.gg/images/lol/champion/{{ get_champ_name(value[0])[0]|e }}.png"
-        alt = {{get_champ_name(value[0])[0]|e}}
-        style = "width: 60px; height: 60px">
-    </div>
-    <div class="ChampionInfo">
-        <div class="ChampionName">
-          {{get_champ_name(value[0])[0]|e}}
-        </div>
-      </div>
-    <div class="Tags">
-      {% for tag in get_champ_name(value[0])[1] %}
-    {{tag}}<br>
-      {% endfor %}
-    </div>
-      <div class="Played">
-    <div class="Winrate">
-      {% if value[1][1] >= 50 %}
-          Winrate: <font color=#2daf7f>{{value[1][1]}}%</font>
-      {% elif value[1][1] < 50 %}
-          Winrate: <font color=#c6443e>{{value[1][1]}}%</font>
-        {% endif %}
-      </div>
-
-      Played: {{ value[1][0]|e }}
-      </div>
-    </div>
-    {% endfor %}
-  </div>
-  </form>
-  </body>
-</html>
