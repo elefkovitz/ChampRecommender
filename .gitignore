@@ -19,6 +19,9 @@ projects/**/submissions/**/*.dta
 projects/**/submissions/**/*.pkl
 projects/**/submissions/**/*.pickle
 
+#My private key!
+*.conf
+
 #My own pickles too!
 *.pkl
 *.pickle
