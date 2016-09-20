@@ -60,14 +60,25 @@ def recommendation(username,df):
     # now find bands neighbor rated that user didn't
     neighborRatings = df[nearest]
     userRatings = df[username]
-    curr_max = -1
+    largest = 0
+    second_largest = 0
+    largest_rec = 0
+    second_largest_rec = 0
     for champion in neighborRatings.index:
-        if np.isnan(neighborRatings[champion]) == False:
-            if(np.isnan(userRatings[champion]) & (neighborRatings[champion] > curr_max)):
-                curr_max = neighborRatings[champion]
-                recom = champion
-    recommendations.append(recom)
-    return recommendations
+        #check for conditions:
+        #1. Similar user has played this champion at least once
+        #2. User has never played this champion once
+        #3. Grab similar user's 2 most played champions
+        if (np.isnan(neighborRatings[champion]) == False) & np.isnan(userRatings[champion]):
+            if (neighborRatings[champion] > largest):
+                second_largest = largest
+                second_largest_rec = largest_rec
+                largest = neighborRatings[champion]
+                largest_rec = champion
+            elif (largest > neighborRatings[champion] > second_largest):
+                second_largest = neighborRatings[champion]
+                second_largest_rec = champion
+    return[largest_rec, second_largest_rec]
 
 def champs_to_play(summoner_name):
     summoner_id = w.get_summoner(name=summoner_name)['id']
@@ -125,6 +136,9 @@ def my_utility_processor():
         for k,v in champ_dict.iteritems():
             champ_dict[k][0] = champ_dict[k][0].replace("'"," ").replace(" ","").replace(".","")
         #manual edits because these naming conventions are not consistent...
+        champ_dict[7][0] = u'Leblanc'
+        champ_dict[9][0] = u'FiddleSticks'
+        champ_dict[62][0] = u'MonkeyKing'
         champ_dict[31][0] = u'Chogath'
         champ_dict[121][0] = u'Khazix'
         champ_dict[161][0] = u'Velkoz'
@@ -134,7 +148,7 @@ def my_utility_processor():
 # Get an example and return it's score from the predictor model
 @app.route("/", methods=["GET", "POST"])
 @app.route("/index", methods=["GET", "POST"])
-def score():
+def index():
     champ_path = request.form.get("champ_path", "")
     list_of_errors = ['error_400','error_401','error_403','error_404',\
     'error_429' ,'error_500','error_503','error_504']
@@ -151,7 +165,9 @@ def score():
             if e in list_of_errors:
                 error_message = e
             else:
-                error_message = "IDK what the deal is"
+
+                error_message = """Error: Could not
+                find match history associated with summoner"""
             return render_template("index.html", error_message=error_message)
     else:
         return render_template("index.html", error_message=None)
@@ -174,11 +190,17 @@ def results():
             if e in list_of_errors:
                 error_message = e
             else:
-                error_message = "IDK what the deal is"
+                error_message = """Error: Could not
+                find match history associated with summoner"""
             return render_template("index.html", error_message=error_message)
     else:
         return render_template("index.html", error_message=None)
 
+@app.route("/champions", methods=["GET"])
+def champions():
+    return render_template("champions.html", tag_dict=tag_dict)
+
+#In case someone tries to access a page that doesn't exist
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404

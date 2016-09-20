@@ -1,0 +1,10 @@
+{% set counter = 0 %}
+{% for k, v  in tag_dict.iteritems() %}
+<img src = "https://sk2.op.gg/images/lol/champion/{{get_champ_name(k)[0]|e}}.png"
+    alt = {{get_champ_name(k[0])[0]|e}}
+    height = "60" width = "60">
+    {% set counter = counter + 1 %}
+    {% if counter % 12 == 0 %}
+      <br>
+    {% endif %}
+{% endfor %}

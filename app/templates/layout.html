@@ -1,0 +1,152 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/ >
+    <title>League of Legends Champion Recommender</title>
+
+    <!-- Google fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+
+    <!-- CSS -->
+
+    <style>
+      body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 11px;
+        font-weight: 300;
+        fill: #ffffff;
+        text-align: center;
+        /*text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;*/
+
+        cursor: default;
+        background-color: #f2f2f2;
+      }
+
+      .legend {
+        font-family: 'Raleway', sans-serif;
+        fill: #ffffff;
+      }
+
+      .tooltip {
+        text-shadow: 0 1px 0 #000, 1px 0 0 #000, -1px 0 0 #000, 0 -1px 0 #000;
+        fill: #ffffff;
+      }
+
+      input[type='text']{
+        padding: 0;
+        width:500px;
+        height: 30px;
+        position: relative;
+        left: 0;
+        outline: none;
+        border: 1px solid #cdcdcd;
+        border-color: rgba(0,0,0,.15);
+        background-color: #424242;
+        color: white;
+        font-size: 16px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        padding-left: 7px;
+        padding-right:7px;
+      }
+
+      input[type=button], input[type=submit], input[type=reset] {
+        background-color: #A4A4A4;/*A4A4A4;*/
+        border: 1px solid #ffffff;
+        color: white;
+        font-size: 16px;
+        height:30px;
+        width:50px;
+        position:relative;
+        /*padding: 10px 20px;*/
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+
+      }
+
+      .SideContent {
+        display: inline-block;
+        font-size: 12px;
+        vertical-align: top;
+        float: right;
+        margin-right: 50px;
+        width: 380px;
+}
+      .SideContent>.Header {
+        border-bottom: 1px solid #d3d3d3;
+        font-size: 16pt;
+        font-weight: bold;
+}
+      .ChampionBox {
+          display: table;
+          width: 100%;
+          border-color: #d3d3d3;
+          border-style: solid;
+          border-width: 0px 1px 1px 1px;
+          color: #879292;
+          text-align: center;
+  }
+      .ChampionBox>.Face {
+        display: table-cell;
+        width: 60px;
+        padding: 5px 5px 0 5px;
+        text-align: right;
+        vertical-align: middle;
+}
+
+      .ChampionBox>.ChampionInfo {
+          display: table-cell;
+          width: 90px;
+          text-align: left;
+          vertical-align: middle;
+          padding-left: 10px;
+}
+      .ChampionBox>.ChampionInfo>.ChampionName {
+          width: 100%;
+          color: #1a1a1a;
+          font-weight: bold;
+          font-size: 13px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+}
+      .ChampionBox>.Played {
+        width: 130px;
+        line-height: 1.8;
+        vertical-align: middle;
+}
+
+      .ChampionBox>.Played>.Winrate {
+        font-size: 14pt;
+}
+
+      .ChampionBox>.Played>.Winrate>.Winning {
+        font-color: #2daf7f;
+}
+
+      .ChampionBox>.Played>.Winrate>.Losing {
+        font-color: #c6443e;
+}
+      .ChampionBox>.Tags {
+        display: table-cell;
+        width: 100px;
+        line-height: 1.8;
+        vertical-align: middle;
+}
+
+              </style>
+  </head>
+  <body>
+    <a href="https://github.com/elefkovitz/ChampRecommender"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
+    <h1><FONT color= '#ff9933'>LoL Recommender</FONT></h1>
+
+  <form method="post">
+    <input name="champ_path" type="text" id="imageurl" placeholder="Enter Summoner Name" />
+    <input type="submit" id="btn" value="Go"/>
+
+    {% block content %}{% endblock %}
