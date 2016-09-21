@@ -2,28 +2,37 @@
 {% extends "layout.html" %}
 {% block title %}Recommendations{% endblock %}
 {% block content %}
-    <br>
-    <img src = "https://sk2.op.gg/images/profile_icons/profileIcon{{profile_pic}}.jpg"
-    alt = {{champ_path}}_{{profile_pic}}
-    style = "width: 90px; height: 90px">
-    Showing content for: {{champ_path}}
+<br>
+<div class ="MainHeader">
+  <img src = "https://sk2.op.gg/images/profile_icons/profileIcon{{profile_pic}}.jpg"
+  alt = {{champ_path}}_{{profile_pic}}
+  style = "width: 80px; height: 80px">
+  {{champ_path}}
     <img src = "https://sk2.op.gg/images/medals/{{ranked_tier[0]}}_{{ranked_tier[1]}}.png"
     alt = {{champ_path}}_{{ranked_tier[0]}}_{{ranked_tier[1]}}
     style = "width: 120px; height: 120px">
     Ranked Tier: {{ranked_tier[0]}} {{ranked_tier[1]}}
+  </div>
+  <br>
     {% if recommended_champs is defined %}
+    <div class="RecommendedContent">
+      <div class="Header">
+        Recommended For You
+      </div>
+      <br>
     {% for champs in recommended_champs %}
-    <br>
-    Recommended: {{get_champ_name(champs)[0]}}
-    <img src = "https://sk2.op.gg/images/lol/champion/{{ get_champ_name(champs)[0]|e }}.png"
+    <div class="Header">
+    {{recommended_champs.index(champs) + 1}}. {{get_champ_name(champs)[0]}}
+  </div>
+    <img src = "http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{ get_champ_name(champs)[0]|e }}_0.jpg"
         alt = {{get_champ_name(champs)[0]|e}}
-        style = "width: 60px; height: 60px">
+        style = "width: 110px; height: 200px">
     {% endfor %}
+  </div>
     {% endif %}
-    <br>
     <div class="SideContent">
     <div class="Header">
-    Match History
+    Your Match History
   </div>
     {% for value in results %}
     <div class="ChampionBox Ranked">
