@@ -10,7 +10,7 @@
   {{champ_path}}
     <img src = "https://sk2.op.gg/images/medals/{{ranked_tier[0]}}_{{ranked_tier[1]}}.png"
     alt = {{champ_path}}_{{ranked_tier[0]}}_{{ranked_tier[1]}}
-    style = "width: 120px; height: 120px">
+    style = "width: 80px; height: 80px">
     Ranked Tier: {{ranked_tier[0]}} {{ranked_tier[1]}}
   </div>
   <br>
@@ -20,14 +20,41 @@
         Recommended For You
       </div>
       <br>
+    <div class="RecommendedChampionNames">
     {% for champs in recommended_champs %}
-    <div class="Header">
-    {{recommended_champs.index(champs) + 1}}. {{get_champ_name(champs)[0]}}
+    <div class="RecChampName">
+      {% if recommended_champs.index(champs) == 0 %}
+    <img src="https://sk2.op.gg/images/medals/gold_1.png"
+    alt="goldemedal"
+    style = "width:35px; height: 35px">
+    {% elif recommended_champs.index(champs) == 1 %}
+  <img src="https://sk2.op.gg/images/medals/silver_1.png"
+  alt="silvermedal"
+  style = "width:35px; height: 35px">
+  {% elif recommended_champs.index(champs) == 2 %}
+  <img src="https://sk2.op.gg/images/medals/bronze_1.png"
+  alt="bronzemedal"
+  style = "width:35px; height: 35px">
+  {% endif %}
   </div>
+    {% endfor %}
+  </div>
+  <div class="RecommendedChampionImages">
+    {% for champs in recommended_champs %}
+    <div class="RecChampImage">
     <img src = "http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{ get_champ_name(champs)[0]|e }}_0.jpg"
         alt = {{get_champ_name(champs)[0]|e}}
         style = "width: 110px; height: 200px">
+    </div>
     {% endfor %}
+    </div>
+    <div class="RecommendedChampionNames">
+    {% for champs in recommended_champs %}
+    <div class="RecChampName">
+    {{recommended_champs.index(champs) + 1}}. {{get_champ_name(champs)[0]}}
+  </div>
+    {% endfor %}
+  </div>
   </div>
     {% endif %}
     <div class="SideContent">

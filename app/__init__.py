@@ -78,7 +78,7 @@ def recommendation(username,df):
             elif (largest > neighborRatings[champion] > second_largest):
                 second_largest = neighborRatings[champion]
                 second_largest_rec = champion
-    return[largest_rec, second_largest_rec]
+    return[largest_rec, second_largest_rec, 17]
 
 def champs_to_play(summoner_name):
     summoner_id = w.get_summoner(name=summoner_name)['id']
