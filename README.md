@@ -31,8 +31,6 @@ The actual recommendation is generated from an SVD model based on a matrix of ma
 
 That code is available in the iPython Notebook file, but is unused in the app. The SVD matrix is pre-calculated (because it takes 12 hours to run), pickled, and called into memory when the Flask app is initialized.
 
-Todo: replace in-memory SVD matrix with pSQL or MongoDB matrix to reduce memory consumption without compromising runtime.
-
 ####Happy recommending!!
 
 ## Special thanks to:
