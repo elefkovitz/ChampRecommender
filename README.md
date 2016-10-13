@@ -11,7 +11,7 @@ This tool uses data from Riot's API, as well as plenty of help from the repos th
 
 If you're curious about just playing around and getting personalized recommendations, you can do that here:
 
-http://54.183.221.159:8888/
+http://54.67.67.56:8888/
 
 If you don't play League of Legends and want to test it, you can use my Summoner Name: __BearsAreScary__
 
