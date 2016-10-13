@@ -62,8 +62,10 @@ def recommendation(username,df):
     userRatings = df[username]
     largest = 0
     second_largest = 0
+    third_largest = 0
     largest_rec = 0
     second_largest_rec = 0
+    third_largest_rec = 0
     for champion in neighborRatings.index:
         #check for conditions:
         #1. Similar user has played this champion at least once
@@ -71,6 +73,8 @@ def recommendation(username,df):
         #3. Grab similar user's 2 most played champions
         if (np.isnan(neighborRatings[champion]) == False) & np.isnan(userRatings[champion]):
             if (neighborRatings[champion] > largest):
+                third_largest = second_largest
+                third_largest_rec = second_largest_rec
                 second_largest = largest
                 second_largest_rec = largest_rec
                 largest = neighborRatings[champion]
@@ -78,7 +82,10 @@ def recommendation(username,df):
             elif (largest > neighborRatings[champion] > second_largest):
                 second_largest = neighborRatings[champion]
                 second_largest_rec = champion
-    return[39, 58, 122]
+            elif (second_largest > neighborRatings[champion] > third_largest):
+                third_largest = neighborRatings[champion]
+                third_largest_rec = champion
+    return[largest_rec, second_largest_rec, third_largest_rec]
 
 def champs_to_play(summoner_name):
     summoner_id = w.get_summoner(name=summoner_name)['id']
