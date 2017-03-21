@@ -70,7 +70,7 @@ def recommendation(username,df):
         #check for conditions:
         #1. Similar user has played this champion at least once
         #2. User has never played this champion once
-        #3. Grab similar user's 2 most played champions
+        #3. Grab similar user's 3 most played champions
         if (np.isnan(neighborRatings[champion]) == False) & np.isnan(userRatings[champion]):
             if (neighborRatings[champion] > largest):
                 third_largest = second_largest
@@ -124,7 +124,7 @@ def get_ranked_tier(summoner_name):
     league_entry = w.get_league_entry(summoner_ids=[player_id])
     tier = league_entry[str(player_id)][0]['tier'].lower()
     division = league_entry[player_id][0]['entries'][0]['division']
-    division = division.replace("I","1").replace("II","2").replace("I","3")\
+    division = division.replace("III","3").replace("II","2").replace("I","1")\
     .replace("IV","4").replace("V","5")
     tier_division = [tier, division]
     return tier_division
@@ -152,7 +152,7 @@ def my_utility_processor():
         return champ_dict[champion_id]
     return dict(get_champ_name=get_champion_name_from_id)
 
-# Get an example and return it's score from the predictor model
+# Get an example and return its score from the predictor model
 @app.route("/", methods=["GET", "POST"])
 @app.route("/index", methods=["GET", "POST"])
 def index():
