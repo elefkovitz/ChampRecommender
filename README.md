@@ -16,7 +16,7 @@ http://54.67.67.56:8888/
 If you don't play League of Legends and want to test it, you can use my favorite popular streamer:
  __Tobias Fate__
 
-__EDIT (12/12/16):__ The new 2017 ranked season is here! I've transitioned all requests to force into the 2016 season, so technically these recommendations are out of date. Once data starts flowing in for 2017, I'll re-run the SVD matrix on my end, load up a new version, and we'll be good to go with live recommendations. Until then, my app will assume that players are the same as they were last year.
+__EDIT (04/03/17):__ New 2017 Ranked Season SVD is in process! Currently, recommendations are working off of a 2016 version of our recommendation matrix, which may make them a bit stale and boring! I will be rerunning the matrix and adding some cool new features soon, stay tuned!
 
 ### How is the app built?
 
