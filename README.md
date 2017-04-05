@@ -48,7 +48,7 @@ __jjmaldonis:__ [Riot-API-Code](https://github.com/jjmaldonis/Riot-API-Code)
 
 And, of course...
 
-The entire __[Metis]__(http://www.thisismetis.com/) team for teaching me everything I know :)
+The entire [Metis](http://www.thisismetis.com/) team for teaching me everything I know :)
 
 ##### Required Legal Disclaimer:
 
