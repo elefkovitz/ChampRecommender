@@ -11,7 +11,7 @@ This tool uses data from Riot's API, as well as plenty of help from the repos th
 
 If you're curious about just playing around and getting personalized recommendations, you can do that here:
 
-http://54.67.67.56:8888/
+http://54.67.67.56:8000/
 
 If you don't play League of Legends and want to test it, you can use this random player I chose (sadly I haven't played ranked this season):
  __ly lose__
