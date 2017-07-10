@@ -16,7 +16,7 @@ http://54.67.67.56:8000/
 If you don't play League of Legends and want to test it, you can use this random player I chose (sadly I haven't played ranked this season):
  __ly lose__
 
-__EDIT (04/03/17):__ New 2017 Ranked Season SVD is in process! Currently, recommendations are working off of a 2016 version of our recommendation matrix, which may make them a bit stale and boring! I will be rerunning the matrix and adding some cool new features soon, stay tuned!
+__EDIT (07/10/17):__ Riot has updated their API endpoints, so all of my API calls are currently broken! Very sorry for the inconvenience, I will get this up and running again ASAP :)
 
 ### How is the app built?
 
