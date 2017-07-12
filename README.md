@@ -1,6 +1,6 @@
 # __ChampRecommender__
 
-![Teemo](https://sk2.op.gg/images/lol/champion/Teemo.png)
+![Teemo](http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Teemo.png)
 
 ### What is ChampRecommender?
 ChampRecommender is a tool to help League of Legends players more effectively choose which champions they should be dedicating their efforts towards.
